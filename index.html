@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hangboard Timer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+
+<div id="container">
+
+    <div id="time">
+        <div class="circle" style="--clr:#ff2972;">
+            <div class="dots timer_dot"></div>
+            <svg viewBox="0 0 100 100" style="width: 100%; height: auto;">
+                <circle cx="50" cy="50" r="46"/>
+                <circle cx="50" cy="50" r="46" id="circle-fill"/>
+            </svg>
+            <div id="timer">00<br></div>
+        </div>
+    </div>
+
+    <form id="formID" class="form">
+        <label class="form_label" for="userTime">Exercise:</label>
+        <input
+                class="form_input"
+                type="text"
+                name="userTime"
+                onkeydown="return event.key !== 'Enter';"
+                id="userTime"
+                value="10"
+        />
+        <span class="units">(seconds)</span>
+
+        <label class="form_label" for="userRestTime">Rest Time:</label>
+        <input
+                class="form_input"
+                type="text"
+                name="userRestTime"
+                onkeydown="return event.key !== 'Enter';"
+                id="userRestTime"
+                value=""
+        />
+        <span class="units">(seconds)</span>
+
+        <label class="form_label" for="userSets">Sets:</label>
+        <input
+                class="form_input"
+                type="text"
+                name="userSets"
+                onkeydown="return event.key !== 'Enter';"
+                id="userSets"
+                value=""
+        />
+
+        <button id="start_button" class="start_button" type="button" value="Start Timer" onclick="startButtonClick()">
+            Start Timer
+        </button>
+        <button id="pause_button" class="pause_button" type="button" value="pause Timer" onclick="pauseButtonClick()">
+            Pause Timer
+        </button>
+
+    </form>
+
+</div>
+
+<script>
+    let timerID = -1;
+
+    function startButtonClick() {
+
+        let startButton = document.getElementById("start_button")
+        startButton.textContent = "Start Timer"
+
+        let value = parseInt(document.getElementById('userTime').value, 10);
+
+        let timer = document.getElementById("timer");
+        let circleFill = document.getElementById("circle-fill");
+
+        let timerDot = document.querySelector(".timer_dot");
+        let exerciseInput = document.getElementById("userTime").value * 1000;
+        let restInput = document.getElementById("userRestTime").value * 1000;
+        let userSets = document.getElementById("userSets")
+
+        let exerciseSeconds = Math.floor(exerciseInput / 1000);
+        let restSeconds = Math.floor(restInput / 1000);
+
+        if (value) {
+
+            if (timerID !== -1) {
+                clearInterval(timerID);
+            }
+
+            timerLogic(restSeconds, exerciseSeconds, userSets, timer, circleFill, timerDot);
+        }
+    }
+
+    function pauseButtonClick() {
+        if (timerID !== -1) {
+            clearInterval(timerID);
+            let startButton = document.getElementById("start_button")
+            startButton.textContent = "Restart Timer"
+        }
+    }
+
+    function timerLogic(rest_seconds, exercise_seconds, user_sets, timer, circleFill, timer_dot) {
+
+        let raw = user_sets == null ? '' : String(user_sets.value).trim();
+        let setsNum = parseInt(raw, 10);
+        let inputSets = (raw !== '' && !isNaN(setsNum) && setsNum > 0) ? setsNum : 1;
+
+        const initialSeconds = (exercise_seconds + rest_seconds) * inputSets;
+        let total_seconds = (exercise_seconds + rest_seconds) * inputSets;
+
+        timerID = setInterval(() => {
+
+            const display_seconds = (total_seconds % 60).toString().padStart(2, '0');
+            const display_minutes = Math.floor(total_seconds / 60).toString();
+
+            timer.innerHTML = (display_minutes !== '0' ? display_minutes + ":" : '') + (display_seconds);
+
+            const radius = circleFill.r.baseVal.value
+            const circumference = 2 * Math.PI * radius
+
+            circleFill.style.strokeDashoffset = circumference - ((circumference * total_seconds) / initialSeconds) + "";
+            // timer_dot.style.transform = `rotate(${(360 + ((360 * total_seconds)) / initialSeconds)}deg)`;
+
+            total_seconds--;
+
+            if (total_seconds < 0) {
+                clearInterval(timerID);
+            }
+        }, 1000)
+    }
+</script>
+</body>
+</html>

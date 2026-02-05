@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    color: #ffffff;
+}
+
+body {
+    min-height: 100vh;
+    background: #2f363e;
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+    padding: 10% 10% 0 10%;
+    align-items: center;
+}
+
+form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-items: center;
+    padding-top: 10%;
+    gap: 10px;
+}
+
+form .form_input {
+    width: 3rem;
+    height: 2rem;
+    color: #2f363e;
+}
+
+#time .circle {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#time .circle svg {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    transform: rotate(270deg);
+}
+
+
+#time .circle svg circle {
+    width: 100%;
+    height: 100%;
+    fill: transparent;
+    stroke: #282828;
+    stroke-width: 8;
+    stroke-linecap: round;
+    /*transform: translate(5px, 5px);*/
+}
+
+/* This refers to the circle-fill */
+#time .circle svg circle:nth-child(2) {
+    stroke: var(--clr);
+    stroke-dasharray: 289;  /* Circumference of circle */
+    stroke-dashoffset: 289; /* Circumference of circle, this helps push gap between lines into view */
+}
+
+#time div {
+    position: absolute;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    font-size: 1.75em;
+}
+
+/*
+#time .dots {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    z-index: 1000;
+}
+
+#time .dots::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    width: 15px;
+    height: 15px;
+    background: var(--clr);
+    border-radius: 50%;
+    box-shadow: 0 0 20px var(--clr), 0 0 60px var(--clr);
+}
+*/
+
+form .start_button {
+    padding: 10px 20px;
+    border: none;
+    background: #4caf50;
+    color: #ffffff;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+form .pause_button {
+    padding: 10px 20px;
+    border: none;
+    background: #ff2972;
+    color: #ffffff;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 10px;
+}
