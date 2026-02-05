@@ -11,13 +11,14 @@
 <div id="container">
 
     <div id="time">
-        <div class="circle" style="--clr:#ff2972;">
+        <div id="circle" class="circle" style="--clr:#ff2972;">
             <div class="dots timer_dot"></div>
             <svg viewBox="0 0 100 100" style="width: 100%; height: auto;">
                 <circle cx="50" cy="50" r="46"/>
                 <circle cx="50" cy="50" r="46" id="circle-fill"/>
             </svg>
-            <div id="timer">00<br></div>
+            <div id="timer" style="padding-bottom: 1.5rem">00<br></div>
+            <div id="timerLabel" style="padding-top: 10rem">HANG<br></div>
         </div>
     </div>
 
@@ -78,7 +79,6 @@
         let timer = document.getElementById("timer");
         let circleFill = document.getElementById("circle-fill");
 
-        let timerDot = document.querySelector(".timer_dot");
         let exerciseInput = document.getElementById("userTime").value * 1000;
         let restInput = document.getElementById("userRestTime").value * 1000;
         let userSets = document.getElementById("userSets")
@@ -92,19 +92,19 @@
                 clearInterval(timerID);
             }
 
-            timerLogic(restSeconds, exerciseSeconds, userSets, timer, circleFill, timerDot);
+            timerLogic(restSeconds, exerciseSeconds, userSets, timer, circleFill);
+            let startButton = document.getElementById("start_button")
+            startButton.textContent = "Restart Timer"
         }
     }
 
     function pauseButtonClick() {
         if (timerID !== -1) {
             clearInterval(timerID);
-            let startButton = document.getElementById("start_button")
-            startButton.textContent = "Restart Timer"
         }
     }
 
-    function timerLogic(rest_seconds, exercise_seconds, user_sets, timer, circleFill, timer_dot) {
+    function timerLogic(rest_seconds, exercise_seconds, user_sets, timer, circleFill) {
 
         let raw = user_sets == null ? '' : String(user_sets.value).trim();
         let setsNum = parseInt(raw, 10);
@@ -124,12 +124,29 @@
             const circumference = 2 * Math.PI * radius
 
             circleFill.style.strokeDashoffset = circumference - ((circumference * total_seconds) / initialSeconds) + "";
-            // timer_dot.style.transform = `rotate(${(360 + ((360 * total_seconds)) / initialSeconds)}deg)`;
+
+            let circleElem = document.getElementById("circle");
+            let cycleLength = exercise_seconds + rest_seconds;
+            let elapsedSinceStart = initialSeconds - total_seconds;
+            let elapsedInCycle = cycleLength > 0 ? (elapsedSinceStart % cycleLength) : 0;
+
+            let timerLabel = document.getElementById("timerLabel")
+
+            if (exercise_seconds > 0 && elapsedInCycle < exercise_seconds) {
+                // exercise/hang phase
+                circleElem.style.setProperty('--clr', '#4caf50');
+                timerLabel.textContent = "HANG"
+            } else {
+                // rest phase or no exercise time
+                circleElem.style.setProperty('--clr', '#ff2972');
+                timerLabel.textContent = "REST"
+            }
 
             total_seconds--;
 
             if (total_seconds < 0) {
                 clearInterval(timerID);
+                timerLabel.textContent = "DONE"
             }
         }, 1000)
     }

@@ -43,7 +43,7 @@ func main() {
 	app.Get("/index", static.New("index.html"))
 	app.Get("/styles.css", static.New("styles.css"))
 
-	log.Fatal(app.Listen("localhost:3000"))
+	log.Fatal(app.Listen(":3000"))
 }
 
 /*func exampleCallback(onStart func()) {
@@ -63,28 +63,3 @@ func invokeCallBackFunction(start func() string, iHateThis func(int), onComplete
 	}
 	onComplete(indexCounter)
 }
-
-/*
-
-function iHateThis(index){
-        console.log(index + "INTERNAL SCREAMING")
-    }
-
-let start = () => {
-                return "I DON'T KNOW MAN";
-            }
-
-invokeCallBackFunction(start, iHateThis, (index) => {
-                console.log("Camden Made Me Do This");
-                return "Completed " + index + " many times"},
-            4)
-
-function invokeCallBackFunction(onStart, onLoop, onComplete, iterationCounter){
-        console.log(onStart());
-        for (let i = 0; i < iterationCounter; i++) {
-            onLoop(i);
-        }
-        onComplete(iterationCounter);
-    }
-
-*/
