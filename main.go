@@ -14,5 +14,5 @@ func main() {
 	app.Get("/", static.New("index.html"))
 	app.Get("/styles.css", static.New("styles.css"))
 
-	log.Fatal(app.Listen(":3000"))
+	log.Fatal(app.Listen("localhost:3000"))
 }
