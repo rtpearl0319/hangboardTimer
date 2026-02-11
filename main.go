@@ -11,10 +11,8 @@ func main() {
 
 	app := fiber.New()
 
-	app.Get("/", func(c fiber.Ctx) {
-		app.Get("/index", static.New("index.html"))
-		app.Get("/styles.css", static.New("styles.css"))
-	})
+	app.Get("/", static.New("index.html"))
+	app.Get("/styles.css", static.New("styles.css"))
 
-	log.Fatal(app.Listen(":80"))
+	log.Fatal(app.Listen(":3000"))
 }

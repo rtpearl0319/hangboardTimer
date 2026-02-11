@@ -1,6 +1,6 @@
 module hangboardTimer
 
-go 1.25.6
+go 1.26.0
 
 require github.com/gofiber/fiber/v3 v3.0.0
 
