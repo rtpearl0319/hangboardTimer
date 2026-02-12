@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Hangboard Timer</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css" >
 </head>
 <body>
 
@@ -60,95 +60,13 @@
         <button id="pause_button" class="pause_button" type="button" value="pause Timer" onclick="pauseButtonClick()">
             Pause Timer
         </button>
+        <button id="reset_button" class="reset_button" type="button" value="reset Timer" onclick="resetButtonClick()">
+            Reset Timer
+        </button>
 
     </form>
 
 </div>
-
-<script>
-    let timerID = -1;
-
-    function startButtonClick() {
-
-        let startButton = document.getElementById("start_button")
-        startButton.textContent = "Start Timer"
-
-        let value = parseInt(document.getElementById('userTime').value, 10);
-
-        let timer = document.getElementById("timer");
-        let circleFill = document.getElementById("circle-fill");
-
-        let exerciseInput = document.getElementById("userTime").value * 1000;
-        let restInput = document.getElementById("userRestTime").value * 1000;
-        let userSets = document.getElementById("userSets")
-
-        let exerciseSeconds = Math.floor(exerciseInput / 1000);
-        let restSeconds = Math.floor(restInput / 1000);
-
-        if (value) {
-
-            if (timerID !== -1) {
-                clearInterval(timerID);
-            }
-
-            timerLogic(restSeconds, exerciseSeconds, userSets, timer, circleFill);
-            let startButton = document.getElementById("start_button")
-            startButton.textContent = "Restart Timer"
-        }
-    }
-
-    function pauseButtonClick() {
-        if (timerID !== -1) {
-            clearInterval(timerID);
-        }
-    }
-
-    function timerLogic(rest_seconds, exercise_seconds, user_sets, timer, circleFill) {
-
-        let raw = user_sets == null ? '' : String(user_sets.value).trim();
-        let setsNum = parseInt(raw, 10);
-        let inputSets = (raw !== '' && !isNaN(setsNum) && setsNum > 0) ? setsNum : 1;
-
-        const initialSeconds = (exercise_seconds + rest_seconds) * inputSets;
-        let total_seconds = (exercise_seconds + rest_seconds) * inputSets;
-
-        timerID = setInterval(() => {
-
-            const display_seconds = (total_seconds % 60).toString().padStart(2, '0');
-            const display_minutes = Math.floor(total_seconds / 60).toString();
-
-            timer.innerHTML = (display_minutes !== '0' ? display_minutes + ":" : '') + (display_seconds);
-
-            const radius = circleFill.r.baseVal.value
-            const circumference = 2 * Math.PI * radius
-
-            circleFill.style.strokeDashoffset = circumference - ((circumference * total_seconds) / initialSeconds) + "";
-
-            let circleElem = document.getElementById("circle");
-            let cycleLength = exercise_seconds + rest_seconds;
-            let elapsedSinceStart = initialSeconds - total_seconds;
-            let elapsedInCycle = cycleLength > 0 ? (elapsedSinceStart % cycleLength) : 0;
-
-            let timerLabel = document.getElementById("timerLabel")
-
-            if (exercise_seconds > 0 && elapsedInCycle < exercise_seconds) {
-                // exercise/hang phase
-                circleElem.style.setProperty('--clr', '#4caf50');
-                timerLabel.textContent = "HANG"
-            } else {
-                // rest phase or no exercise time
-                circleElem.style.setProperty('--clr', '#ff2972');
-                timerLabel.textContent = "REST"
-            }
-
-            total_seconds--;
-
-            if (total_seconds < 0) {
-                clearInterval(timerID);
-                timerLabel.textContent = "DONE"
-            }
-        }, 1000)
-    }
-</script>
+<script src="main.js"></script>
 </body>
 </html>
