@@ -22,7 +22,7 @@ class CountdownTimer {
             return;
         }
 
-        if (this.isRunning && this.count <= 0 && this.timerID !== -1) {
+        if (this.isRunning || this.count <= 0 || this.timerID !== -1) {
             return;
         }
 
@@ -35,6 +35,7 @@ class CountdownTimer {
             clearInterval(this.timerID);
             this.timerID = -1;
             this.isRunning = false;
+            document.getElementById("start_button").textContent = "Start Timer"
     }
 
     onTick() {
@@ -50,6 +51,8 @@ class CountdownTimer {
         // stop when we've reached zero or below
         if (this.count <= 0) {
             this.stop();
+            let timerLabel = document.getElementById("timerLabel")
+            timerLabel.textContent = "DONE"
         }
     }
 
@@ -93,14 +96,26 @@ class UserTimerInput {
 
 let timer;
 let lastUserInput;
+let startButtonClicked;
 
 function startButtonClick() {
 
-    document.getElementById("start_button").textContent = "Start Timer"
+    if (startButtonClicked){
+        pauseButtonClick()
+        startButtonClicked = false;
+        document.getElementById("start_button").textContent = "Start Timer"
+        document.getElementById("start_button").style.setProperty('background', '#4caf50')
+    }
 
-    if (parseInt(document.getElementById('userTime').value, 10)) {
-        updateTimerForInput();
-        updateTimerUI(timer.count, timer.startCount, lastUserInput);
+    else{
+
+        if (parseInt(document.getElementById('userTime').value, 10)) {
+            updateTimerForInput();
+            updateTimerUI(timer.count, timer.startCount, lastUserInput);
+            startButtonClicked = true;
+            document.getElementById("start_button").textContent = "Pause Timer"
+            document.getElementById("start_button").style.setProperty('background', '#ff2972')
+        }
     }
 }
 
@@ -176,4 +191,7 @@ function resetButtonClick(){
     timer.reset()
     updateTimerForInput(true);
     updateTimerUI(timer.count, timer.startCount, lastUserInput);
+    document.getElementById("start_button").textContent = "Start Timer"
+    document.getElementById("start_button").style.setProperty('background', '#4caf50')
+    startButtonClicked = false;
 }

@@ -22,14 +22,14 @@
     </div>
 
     <form id="formID" class="form">
-        <label class="form_label" for="userTime">Exercise:</label>
+        <label class="form_label" for="userTime">Hang Time:</label>
         <input
                 class="form_input"
                 type="text"
                 name="userTime"
                 onkeydown="return event.key !== 'Enter';"
                 id="userTime"
-                value="10"
+                value="15"
         />
         <span class="units">(seconds)</span>
 
@@ -40,7 +40,7 @@
                 name="userRestTime"
                 onkeydown="return event.key !== 'Enter';"
                 id="userRestTime"
-                value=""
+                value="45"
         />
         <span class="units">(seconds)</span>
 
@@ -51,15 +51,13 @@
                 name="userSets"
                 onkeydown="return event.key !== 'Enter';"
                 id="userSets"
-                value=""
+                value="3"
         />
 
         <button id="start_button" class="start_button" type="button" value="Start Timer" onclick="startButtonClick()">
             Start Timer
         </button>
-        <button id="pause_button" class="pause_button" type="button" value="pause Timer" onclick="pauseButtonClick()">
-            Pause Timer
-        </button>
+
         <button id="reset_button" class="reset_button" type="button" value="reset Timer" onclick="resetButtonClick()">
             Reset Timer
         </button>
