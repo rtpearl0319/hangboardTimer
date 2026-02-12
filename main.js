@@ -105,6 +105,7 @@ function startButtonClick() {
         startButtonClicked = false;
         document.getElementById("start_button").textContent = "Start Timer"
         document.getElementById("start_button").style.setProperty('background', '#4caf50')
+        timer.stop()
     }
 
     else{
@@ -115,6 +116,7 @@ function startButtonClick() {
             startButtonClicked = true;
             document.getElementById("start_button").textContent = "Pause Timer"
             document.getElementById("start_button").style.setProperty('background', '#ff2972')
+            timer.start()
         }
     }
 }
@@ -138,6 +140,7 @@ function updateTimerForInput(isReset) {
 
     // Create timer but don't start, if new input
     if (!hasNewInput && !isReset) {
+        startButtonClicked = false;
         timer.start()
     }
 
