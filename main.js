@@ -1,4 +1,3 @@
-
 // Counts down from total iterations.
 class CountdownTimer {
 
