@@ -13,6 +13,7 @@ func main() {
 
 	app.Get("/", static.New("index.html"))
 	app.Get("/styles.css", static.New("styles.css"))
+	app.Get("/main.js", static.New("main.js"))
 
 	log.Fatal(app.Listen("localhost:3000"))
 }
