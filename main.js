@@ -100,7 +100,7 @@ let startButtonClicked;
 
 function startButtonClick() {
 
-    if (startButtonClicked){
+    if (startButtonClicked) {
         pauseButtonClick()
         startButtonClicked = false;
         document.getElementById("start_button").textContent = "Start Timer"
@@ -154,6 +154,8 @@ function fetchUserTimerInput() {
         Math.max(document.getElementById("userSets").value, 1));
 }
 
+let isHanging = true;
+
 function updateTimerUI(count, startCount, userInput){
 
     let timerElement = document.getElementById("timer");
@@ -165,6 +167,9 @@ function updateTimerUI(count, startCount, userInput){
 
     const radius = circleFill.r.baseVal.value
     const circumference = 2 * Math.PI * radius
+
+    const catMeow = new Audio('813119__qubodup__cat-meow.wav')
+    const catHiss = new Audio('146963__zabuhailo__cathisses1.wav')
 
     circleFill.style.strokeDashoffset = circumference - ((circumference * count) / startCount) + "";
 
@@ -179,10 +184,21 @@ function updateTimerUI(count, startCount, userInput){
         // exercise/hang phase
         circleElem.style.setProperty('--clr', '#4caf50');
         timerLabel.textContent = "HANG"
+
+        if (!isHanging) {
+            catMeow.volume = 0.25;
+            catMeow.play();
+            isHanging = true;
+        }
+
     } else {
         // rest phase or no exercise time
         circleElem.style.setProperty('--clr', '#ff2972');
         timerLabel.textContent = "REST"
+        if (isHanging) {
+            catHiss.play();
+            isHanging = false;
+        }
     }
 }
 
@@ -197,4 +213,6 @@ function resetButtonClick(){
     document.getElementById("start_button").textContent = "Start Timer"
     document.getElementById("start_button").style.setProperty('background', '#4caf50')
     startButtonClicked = false;
+    isHanging = true;
+
 }

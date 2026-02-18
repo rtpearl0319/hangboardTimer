@@ -22,45 +22,58 @@
     </div>
 
     <form id="formID" class="form">
-        <label class="form_label" for="userTime">Hang Time:</label>
-        <input
-                class="form_input"
-                type="text"
-                name="userTime"
-                onkeydown="return event.key !== 'Enter';"
-                id="userTime"
-                value="15"
-        />
-        <span class="units">(seconds)</span>
 
-        <label class="form_label" for="userRestTime">Rest Time:</label>
-        <input
-                class="form_input"
-                type="text"
-                name="userRestTime"
-                onkeydown="return event.key !== 'Enter';"
-                id="userRestTime"
-                value="45"
-        />
-        <span class="units">(seconds)</span>
-
-        <label class="form_label" for="userSets">Sets:</label>
-        <input
-                class="form_input"
-                type="text"
-                name="userSets"
-                onkeydown="return event.key !== 'Enter';"
-                id="userSets"
-                value="3"
-        />
+        <div class="formLeft">
 
         <button id="start_button" class="start_button" type="button" value="Start Timer" onclick="startButtonClick()">
             Start Timer
         </button>
 
+        <label class="form_label" for="userTime">Hang Time:</label>
+        <label class="form_label" for="userRestTime">Rest Time:</label>
+        <label class="form_label" for="userSets">Sets:</label>
+
+        </div>
+
+        <div class="formRight">
         <button id="reset_button" class="reset_button" type="button" value="reset Timer" onclick="resetButtonClick()">
             Reset Timer
         </button>
+
+            <div>
+        <input
+        class="form_input"
+        type="text"
+        name="userTime"
+        onkeydown="return event.key !== 'Enter';"
+        id="userTime"
+        value="15"
+        />
+        (s)
+            </div>
+
+            <div>
+        <input
+        class="form_input"
+        type="text"
+        name="userRestTime"
+        onkeydown="return event.key !== 'Enter';"
+        id="userRestTime"
+        value="45"
+        />
+        <span class="units">(s)</span>
+            </div>
+
+        <input
+        class="form_input"
+        type="text"
+        name="userSets"
+        onkeydown="return event.key !== 'Enter';"
+        id="userSets"
+        value="3"
+        />
+
+        </div>
 
     </form>
 
