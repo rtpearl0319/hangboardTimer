@@ -168,10 +168,8 @@ function updateTimerUI(count, startCount, userInput){
     const radius = circleFill.r.baseVal.value
     const circumference = 2 * Math.PI * radius
 
-    /*const catMeow = new Audio('813119__qubodup__cat-meow.wav')*/
+    const catMeow = new Audio('813119__qubodup__cat-meow.wav')
     const catHiss = new Audio('146963__zabuhailo__cathisses1.wav')
-
-    catHiss.play();
 
     circleFill.style.strokeDashoffset = circumference - ((circumference * count) / startCount) + "";
 
@@ -188,8 +186,8 @@ function updateTimerUI(count, startCount, userInput){
         timerLabel.textContent = "HANG"
 
         if (!isHanging) {
-            /*catMeow.volume = 0.25;*/
-            /*catMeow.play();*/
+            catMeow.volume = 0.25;
+            catMeow.play();
             isHanging = true;
         }
 
@@ -198,7 +196,7 @@ function updateTimerUI(count, startCount, userInput){
         circleElem.style.setProperty('--clr', '#ff2972');
         timerLabel.textContent = "REST"
         if (isHanging) {
-            /*catHiss.play();*/
+            catHiss.play();
             isHanging = false;
         }
     }
